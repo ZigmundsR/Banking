@@ -25,7 +25,7 @@ public class BankAccount {
         }
     }
 
-    public void printBalance(int amount){
+    public void printBalance(){
         System.out.println("Current balance:" + this.balance);
     }
 
