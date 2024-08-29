@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +17,8 @@ public class Main {
             System.out.println("3. Print balance of Account 1");
             System.out.println("4. Transfer from Account 1 to Account 2");
             System.out.println("5. Print balance of Account 2");
-            System.out.println("6. Exit");
+            System.out.println("6. Create report of accounts");
+            System.out.println("7. Exit");
             int choice = scanner.nextInt();
 
             switch (choice) {
@@ -40,6 +44,15 @@ public class Main {
                     account2.printBalance();
                     break;
                 case 6:
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("report.txt"))) {
+                        writer.write("1) " + account1.toString());
+                        writer.write("\n");
+                        writer.write("2) " + account2.toString());
+                    } catch (IOException e) {
+                        System.err.println("Error writing to file: " + e.getMessage());
+                    }
+                    break;
+                case 7:
                     running = false;
                     break;
                 default:
