@@ -6,53 +6,62 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        BankAccount account1 = new BankAccount();
-        BankAccount account2 = new BankAccount();
+
+        Customer customer = new Customer("Zigmunds");
+        customer.addBankAccount();
+
+        int accountID = 0;
 
         boolean running = true;
+
         while (running) {
             System.out.println("Choose an option:");
-            System.out.println("1. Deposit to Account 1");
-            System.out.println("2. Withdraw from Account 1");
-            System.out.println("3. Print balance of Account 1");
-            System.out.println("4. Transfer from Account 1 to Account 2");
-            System.out.println("5. Print balance of Account 2");
-            System.out.println("6. Create report of accounts");
-            System.out.println("7. Exit");
+            System.out.println("1. Switch account");
+            System.out.println("2. Withdraw from Account");
+            System.out.println("3. Deposit to Account");
+            System.out.println("4. Print balance of Accounts");
+            System.out.println("5. Transfer from Account to Account");
+            System.out.println("6. Create an account");
+            System.out.println("7. Create report of customer");
+            System.out.println("8. Exit");
             int choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter deposit amount for Account 1: ");
-                    int depositAmount = scanner.nextInt();
-                    account1.deposit(depositAmount);
+                    System.out.print("Enter account number: ");
+                    accountID = scanner.nextInt() - 1;
                     break;
                 case 2:
-                    System.out.print("Enter withdrawal amount for Account 1: ");
+                    System.out.print("Enter withdrawal amount for Account: ");
                     int withdrawalAmount = scanner.nextInt();
-                    account1.withdraw(withdrawalAmount);
+                    customer.withdraw(accountID, withdrawalAmount);
                     break;
                 case 3:
-                    account1.printBalance();
+                    System.out.print("Enter deposit amount for Account: ");
+                    int depositAmount = scanner.nextInt();
+                    customer.deposit(accountID, depositAmount);
                     break;
                 case 4:
-                    System.out.print("Enter amount to transfer from Account 1 to Account 2: ");
-                    int transferAmount = scanner.nextInt();
-                    account1.transfer(account2, transferAmount);
+                    customer.printAccountsBalance();
                     break;
                 case 5:
-                    account2.printBalance();
+                    System.out.print("Enter amount to transfer from Account to Account: ");
+                    int transferAmount = scanner.nextInt();
+                    System.out.print("Enter which account to send money to: ");
+                    int targetID = scanner.nextInt();
+                    customer.transfer(accountID, targetID, transferAmount);
                     break;
                 case 6:
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("report.txt"))) {
-                        writer.write("1) " + account1.toString());
-                        writer.write("\n");
-                        writer.write("2) " + account2.toString());
+                    customer.addBankAccount();
+                    break;
+                case 7:
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("report2.txt"))) {
+                        writer.write(customer.toString());
                     } catch (IOException e) {
                         System.err.println("Error writing to file: " + e.getMessage());
                     }
                     break;
-                case 7:
+                case 8:
                     running = false;
                     break;
                 default:
@@ -60,7 +69,6 @@ public class Main {
                     break;
             }
         }
-
         scanner.close();
         System.out.println("Program terminated.");
     }
