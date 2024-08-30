@@ -40,9 +40,10 @@ public class BankAccount {
 
     public void transfer(BankAccount targetAccount, int amount) {
         if (amount > 0 && amount <= this.balance) {
-            this.withdraw(amount); // Deduct amount from the current account
-            targetAccount.deposit(amount); // Add amount to the target account
+            this.balance -= amount; // Deduct amount from the current account
+            targetAccount.balance += amount; // Add amount to the target account
             this.transactions.add(new Transaction("Transfer", amount, new Date()));
+            targetAccount.transactions.add(new Transaction("Transfer received", amount, new Date()));
         } else {
             System.out.println("Transfer failed: insufficient balance or invalid amount.");
         }
@@ -64,6 +65,4 @@ public class BankAccount {
         }
         return sb.toString();
     }
-
-
 }
