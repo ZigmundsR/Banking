@@ -18,4 +18,16 @@ public class Transaction {
                 ", amount= " + amount +
                 ", date=" + date;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public Date getDate() {
+        return date;
+    }
 }

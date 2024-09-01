@@ -48,14 +48,14 @@ public class Main {
                     System.out.print("Enter amount to transfer from Account to Account: ");
                     int transferAmount = scanner.nextInt();
                     System.out.print("Enter which account to send money to: ");
-                    int targetID = scanner.nextInt();
+                    int targetID = scanner.nextInt() - 1;
                     customer.transfer(accountID, targetID, transferAmount);
                     break;
                 case 6:
                     customer.addBankAccount();
                     break;
                 case 7:
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("report2.txt"))) {
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("report.txt"))) {
                         writer.write(customer.toString());
                     } catch (IOException e) {
                         System.err.println("Error writing to file: " + e.getMessage());

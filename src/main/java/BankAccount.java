@@ -65,4 +65,12 @@ public class BankAccount {
         }
         return sb.toString();
     }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
 }

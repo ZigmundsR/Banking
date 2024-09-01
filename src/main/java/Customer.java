@@ -22,7 +22,7 @@ public class Customer {
     }
 
     public void transfer(int accountID, int targetID, int amount){
-        bankAccounts.get(accountID).transfer(bankAccounts.get(targetID - 1),amount);
+        bankAccounts.get(accountID).transfer(bankAccounts.get(targetID),amount);
     }
 
     public void addBankAccount(){
@@ -54,5 +54,13 @@ public class Customer {
             sb.append("No BankAccounts");
         }
         return sb.toString();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
     }
 }
