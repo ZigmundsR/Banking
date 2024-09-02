@@ -1,3 +1,6 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -5,6 +8,7 @@ import java.util.List;
 public class BankAccount {
     private int balance;
     private List<Transaction> transactions;
+    private static Logger logger = LogManager.getLogger(BankAccount.class);
 
     public BankAccount() {
         this.balance = 0; // Initialize balance to 0
@@ -30,6 +34,7 @@ public class BankAccount {
             this.balance -= amount;
             this.transactions.add(new Transaction("Withdrawal", amount, new Date()));
         } else {
+            logger.error("Couldn't withdraw: " + amount + " because balance is: " + this.balance);
             System.out.println("Insufficient balance or invalid withdrawal amount.");
         }
     }
@@ -45,6 +50,7 @@ public class BankAccount {
             this.transactions.add(new Transaction("Transfer", amount, new Date()));
             targetAccount.transactions.add(new Transaction("Transfer received", amount, new Date()));
         } else {
+            logger.error("Couldn't transfer: " + amount +"  because balance is: " + this.balance);
             System.out.println("Transfer failed: insufficient balance or invalid amount.");
         }
     }

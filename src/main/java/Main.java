@@ -1,9 +1,14 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    private static Logger logger = LogManager.getLogger(Main.class);
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -15,21 +20,39 @@ public class Main {
         boolean running = true;
 
         while (running) {
+            System.out.println("You are working on bank account: " + (accountID + 1));
             System.out.println("Choose an option:");
             System.out.println("1. Switch account");
             System.out.println("2. Withdraw from Account");
             System.out.println("3. Deposit to Account");
             System.out.println("4. Print balance of Accounts");
             System.out.println("5. Transfer from Account to Account");
-            System.out.println("6. Create an account");
+            System.out.println("6. Create a bank account");
             System.out.println("7. Create report of customer");
             System.out.println("8. Exit");
-            int choice = scanner.nextInt();
+            int choice = 0;
+            try {
+                choice = scanner.nextInt();
+            } catch (Exception e) {
+                scanner.nextLine(); // Clear the invalid input from the scanner
+                logger.error("incorrect input (choice): ",e);
+            }
 
             switch (choice) {
                 case 1:
                     System.out.print("Enter account number: ");
-                    accountID = scanner.nextInt() - 1;
+
+                    try {
+                        int tempAccountID = scanner.nextInt();
+                        if (customer.getBankAccounts().size() >= tempAccountID && tempAccountID > 0){
+                            logger.info("Switched accounts from: " + tempAccountID + " to " + accountID);
+                            accountID = tempAccountID;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("incorrect input");
+                        scanner.nextLine(); // Clear the invalid input from the scanner
+                        logger.error("incorrect input (switch): ",e);
+                    }
                     break;
                 case 2:
                     System.out.print("Enter withdrawal amount for Account: ");
@@ -56,9 +79,14 @@ public class Main {
                     break;
                 case 7:
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter("report.txt"))) {
+                        logger.info("Created report to a file");
                         writer.write(customer.toString());
                     } catch (IOException e) {
                         System.err.println("Error writing to file: " + e.getMessage());
+                        logger.error("Couldn't create report to a file");
+                    }
+                    finally {
+                        System.out.println("finally block worked :)");
                     }
                     break;
                 case 8:
