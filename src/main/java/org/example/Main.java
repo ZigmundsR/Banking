@@ -1,3 +1,5 @@
+package org.example;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,7 +37,7 @@ public class Main {
                 choice = scanner.nextInt();
             } catch (Exception e) {
                 scanner.nextLine(); // Clear the invalid input from the scanner
-                logger.error("incorrect input (choice): ",e);
+                logger.error("incorrect input (choice): ", e);
             }
 
             switch (choice) {
@@ -44,14 +46,14 @@ public class Main {
 
                     try {
                         int tempAccountID = scanner.nextInt();
-                        if (customer.getBankAccounts().size() >= tempAccountID && tempAccountID > 0){
+                        if (customer.getBankAccounts().size() >= tempAccountID && tempAccountID > 0) {
                             logger.info("Switched accounts from: " + tempAccountID + " to " + accountID);
                             accountID = tempAccountID;
                         }
                     } catch (Exception e) {
                         System.out.println("incorrect input");
                         scanner.nextLine(); // Clear the invalid input from the scanner
-                        logger.error("incorrect input (switch): ",e);
+                        logger.error("incorrect input (switch): ", e);
                     }
                     break;
                 case 2:
@@ -84,8 +86,7 @@ public class Main {
                     } catch (IOException e) {
                         System.err.println("Error writing to file: " + e.getMessage());
                         logger.error("Couldn't create report to a file");
-                    }
-                    finally {
+                    } finally {
                         System.out.println("finally block worked :)");
                     }
                     break;
